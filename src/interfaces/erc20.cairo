@@ -2,7 +2,7 @@ use starknet::ContractAddress;
 
 #[starknet::interface]
 pub trait IERC20<TContractState> {
-    fn balanceOf(self: @TContractState, address:ContractAddress) -> u256;
-    fn transfer(ref self: TContractState, amount: u256, to: ContractAddress);
-    fn totalSupply(self: @TContractState) -> u256;
+    fn balanceOf(self: @TContractState, address:ContractAddress) -> felt252;
+    fn transfer(ref self: TContractState, to: ContractAddress, value: felt252);
+    fn totalSupply(self: @TContractState) -> felt252;
 }
