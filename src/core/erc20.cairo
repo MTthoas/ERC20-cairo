@@ -1,9 +1,8 @@
 #[starknet::contract]
 mod erc_20_contract {
-    use starknet::storage::StoragePointerReadAccess;
-use starknet::storage::{StoragePathEntry, Map};
-    use starknet::storage::{StoragePointerWriteAccess, StorageMapReadAccess, StorageMapWriteAccess};
-    use starknet::{ContractAddress, get_caller_address};
+    use starknet::storage::{Map};
+    use starknet::storage::{StoragePointerWriteAccess, StorageMapWriteAccess};
+    use starknet::{ContractAddress,};
     use crate::interfaces::erc20::IERC20;
 
     #[storage]
@@ -45,28 +44,5 @@ use starknet::storage::{StoragePathEntry, Map};
         self.balances.write(owner, initial_supply);
         self.owner.write(owner);
 
-    }
-
-    #[abi(embed_v0)]
-    impl ERC20Impl of IERC20<ContractState> {
-        fn balanceOf(self: @ContractState, address: ContractAddress) -> felt252 {
-            self.balances.read(address)
-        }
-
-        fn totalSupply(self: @ContractState) -> felt252 {
-            self.supply.read()
-        }
-
-        fn transfer(ref self: ContractState, to: ContractAddress, value: felt252){
-            let called = get_caller_address();
-            self.balances.write(called, self.balances.read(called) - value);
-            self.balances.write(to, self.balances.read(to) + value);
-            self.emit(Transfer {
-                from: called,
-                to: to,
-                value: value,
-            });
-        }
-        
     }
 }
