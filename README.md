@@ -1,4 +1,4 @@
-### README: ERC-20 Contract for Starknet
+### ERC-20 Contract for Starknet
 
 ---
 
